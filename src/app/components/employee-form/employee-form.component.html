@@ -1,0 +1,89 @@
+<!-- <div class="mt-5">
+    <div class="shadow p-4 ">
+        @if(isEdit)
+        {
+            <h4>Edit Employee Detail</h4> 
+        }
+        @else{
+            <h4>Create Employee Form</h4>
+        }
+       
+        <form [formGroup]="employeeForm" (ngSubmit)="save()" >
+            <div class="mb-3">
+                <label for="firstname" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="firstname" placeholder="First Name" formControlName="firstName">
+            </div>
+            <div class="mb-3">
+                <label for="lastname" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="lastname" placeholder="Last Name" formControlName="lastName">
+            </div>
+            <div class="mb-3">
+                <label for="age" class="form-label">Age</label>
+                <input type="text" class="form-control" id="age" placeholder="Age" formControlName="age">
+            </div>
+            <div class="mb-3">
+                <label for="salary" class="form-label">Salary</label>
+                <input type="text" class="form-control" id="salary" placeholder="Salary" formControlName="salary">
+            </div>
+            @if(isEdit){
+                <button type="submit" class="btn btn-primary" [disabled]="!employeeForm.valid">Update</button>
+            }
+            @else{
+                <button type="submit" class="btn btn-primary" [disabled]="!employeeForm.valid">Save</button>
+
+            }
+           
+        </form>
+    </div>
+</div> -->
+<div class="mt-5 container">
+    <div class="shadow p-4">
+      <h4 *ngIf="isEdit; else createFormTitle">Edit Employee Detail</h4>
+      <ng-template #createFormTitle>
+        <h4>Create Employee Form</h4>
+      </ng-template>
+  
+      <form [formGroup]="employeeForm" (ngSubmit)="save()">
+        <div class="mb-3">
+          <label for="firstname" class="form-label">First Name</label>
+          <input type="text" class="form-control" id="firstname" placeholder="First Name" formControlName="firstName">
+          <div *ngIf="employeeForm.get('firstName')?.invalid && employeeForm.get('firstName')?.touched" class="text-danger">
+            <div *ngIf="employeeForm.get('firstName')?.errors?.['required']">First Name is required.</div>
+            <div *ngIf="employeeForm.get('firstName')?.errors?.['minlength']">First Name must be at least 2 characters long.</div>
+            <div *ngIf="employeeForm.get('firstName')?.errors?.['maxlength']">First Name cannot be more than 50 characters long.</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="lastname" class="form-label">Last Name</label>
+          <input type="text" class="form-control" id="lastname" placeholder="Last Name" formControlName="lastName">
+          <div *ngIf="employeeForm.get('lastName')?.invalid && employeeForm.get('lastName')?.touched" class="text-danger">
+            <div *ngIf="employeeForm.get('lastName')?.errors?.['required']">Last Name is required.</div>
+            <div *ngIf="employeeForm.get('lastName')?.errors?.['minlength']">Last Name must be at least 2 characters long.</div>
+            <div *ngIf="employeeForm.get('lastName')?.errors?.['maxlength']">Last Name cannot be more than 50 characters long.</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="age" class="form-label">Age</label>
+          <input type="number" class="form-control" id="age" placeholder="Age" formControlName="age">
+          <div *ngIf="employeeForm.get('age')?.invalid && employeeForm.get('age')?.touched" class="text-danger">
+            <div *ngIf="employeeForm.get('age')?.errors?.['required']">Age is required.</div>
+            <div *ngIf="employeeForm.get('age')?.errors?.['min']">Age must be at least 18.</div>
+            <div *ngIf="employeeForm.get('age')?.errors?.['max']">Age cannot exceed 100.</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="salary" class="form-label">Salary</label>
+          <input type="number" class="form-control" id="salary" placeholder="Salary" formControlName="salary">
+          <div *ngIf="employeeForm.get('salary')?.invalid && employeeForm.get('salary')?.touched" class="text-danger">
+            <div *ngIf="employeeForm.get('salary')?.errors?.['required']">Salary is required.</div>
+            <div *ngIf="employeeForm.get('salary')?.errors?.['min']">Salary must be greater than or equal to 0.</div>
+          </div>
+        </div>
+  
+        <button type="submit" class="btn btn-primary" [disabled]="!employeeForm.valid">
+          {{ isEdit ? 'Update' : 'Save' }}
+        </button>
+      </form>
+    </div>
+  </div>
+  
